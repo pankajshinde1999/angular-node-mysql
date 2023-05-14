@@ -1,0 +1,33 @@
+<div>
+  <h1 class="alert alert-primary">join list </h1>
+</div>
+<div>
+  <table class="table table-borderless">
+    <thead>
+      <tr>
+        <th>Product ID</th>
+        <th>Product Name</th>
+        <th>Category ID</th>
+        <th>Category Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.ProductID }}</td>
+        <td>{{ product.ProductName }}</td>
+        <td>{{ product.CategoryID }}</td>
+        <td>{{ product.CategoryName }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <form (ngSubmit)="getJoin()">
+      <button class="btn btn-success" type="submit">Fetch join</button>
+    </form>
+    <button class="btn btn-primary" routerLink="/categories">Category</button>
+    <button class="btn btn-primary" routerLink="/products">Products</button>
+    <button class="btn btn-primary" routerLink="/home">home</button>
+  </div>
+</div>

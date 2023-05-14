@@ -1,0 +1,28 @@
+<div>
+  <h1 class="alert alert-primary">Category list </h1>
+</div>
+<div>
+  <table class="table table-borderless">
+    <thead>
+      <tr>
+        <th>Category ID</th>
+        <th>Category Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let Category of categories">
+        <td>{{ Category.CategoryID }}</td>
+        <td>{{ Category.CategoryName }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <form (ngSubmit)="getCategories()">
+      <button class="btn btn-success" type="submit">Fetch Categories</button>
+    </form>
+    <button class="btn btn-primary" routerLink="/home">home</button>
+    <button class="btn btn-primary" routerLink="/home/products">Products</button>
+  </div>
+</div>
