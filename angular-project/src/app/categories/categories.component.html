@@ -12,7 +12,9 @@
     <tbody>
       <tr *ngFor="let Category of categories">
         <td>{{ Category.CategoryID }}</td>
+        <!-- <td a routerLink="/home/products" class="nav-link text-dark" href="#">{{ Category.CategoryName }}</td> -->
         <td>{{ Category.CategoryName }}</td>
+
       </tr>
     </tbody>
   </table>
@@ -22,6 +24,9 @@
     <form (ngSubmit)="getCategories()">
       <button class="btn btn-success" type="submit">Fetch Categories</button>
     </form>
+    <!-- <label for="id">id</label>
+    <input type="number" [(ngModel)]="catid"> -->
+    <!-- <button class="btn btn-success" type="submit" (click)="getCategorybyid()">Categoriesbyid</button> -->
     <button class="btn btn-primary" routerLink="/home">home</button>
     <button class="btn btn-primary" routerLink="/home/products">Products</button>
   </div>

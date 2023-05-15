@@ -8,6 +8,7 @@ import { ProductService } from '../product.service';
 })
 export class CategoriesComponent {
   categories: any = []
+  catid: any
   constructor(private categoryService: ProductService) {
   }
   getCategories() {
@@ -17,4 +18,12 @@ export class CategoriesComponent {
       }
     )
   }
+  // getCategorybyid(){
+  //   console.log(this.catid)
+  //   this.categoryService.getCategorybyid(this.catid).subscribe(
+  //     data => {
+  //       this.categories = this.catid
+  //       }
+  //       )
+  // }
 }

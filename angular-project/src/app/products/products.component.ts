@@ -16,4 +16,9 @@ export class ProductsComponent {
         this.products = data
       })
   }
+  // joinproductsbyid(){
+  //   this.productService.getProductbyid(this.products.id).subscribe(
+  //     (data:any) => { this.products.id = data})
+  // }
+
 }

@@ -67,23 +67,25 @@ app.get('/products', (req, res) => {
 });
 
 // Retrieve a record by ID
-app.post('/categoriesbyid', (req, res) => {
-    const { id } = req.body;
-    console.log(req.body)
+app.get('/categories/:id', (req, res) => {
+    const { id } = req.params;
     const sql = `SELECT * FROM Categories WHERE CategoryID = ${id}`;
+    //    console.log(sql)
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.send(result);
     });
 });
-app.post('/getproductbyid/:id/:pid', (req, res) => {
-    const { id , pid } = req.params;
-    const sql = `SELECT * FROM Products WHERE CategoryID = ${id} AND ProductID = ${pid}`;
-    db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send(result);
-    });
-});
+
+// app.post('/getproductbyid/:id/:pid', (req, res) => {
+//     const { id , pid } = req.params;
+//     const sql = `SELECT * FROM Products WHERE CategoryID = ${id} AND ProductID = ${pid}`;
+//     db.query(sql, (err, result) => {
+//         if (err) throw err;
+//         res.send(result);
+//     });
+// });
+
 app.post('/getproducts/:id', (req, res) => {
     const { id } = req.params;
     const sql = `SELECT * FROM Products WHERE CategoryID = ${id} `;
@@ -93,46 +95,67 @@ app.post('/getproducts/:id', (req, res) => {
     });
 });
 
-// app.post('/joinproducts/:id', (req, res) => {
-//     const { id } = req.params;
-//     const sql = `Select c.CategoryID ,c.CategoryName ,p.ProductID, p.ProductName 
-//     from Products p inner join categories c on p.CategoryID = c.CategoryID where c.CategoryID = ${id}; `;
-//     db.query(sql, (err, result) => {
-//         if (err) throw err;
-//         res.send(result);
-//     });
-// });
+//join and join by id
+app.get('/joinproducts/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = `SELECT c.CategoryID, c.CategoryName, p.ProductID, p.ProductName 
+                FROM Products p 
+                INNER JOIN categories c ON p.CategoryID = c.CategoryID AND c.CategoryID =${id} ;`;
+    //console.log(sql)
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
 app.get('/joinproducts', (req, res) => {
     const sql = `SELECT c.CategoryID, c.CategoryName, p.ProductID, p.ProductName 
                 FROM Products p 
-                INNER JOIN categories c ON p.CategoryID = c.CategoryID`;
-                //console.log(sql)
+                INNER JOIN categories c ON p.CategoryID = c.CategoryID ;`;
+    //console.log(sql)
     db.query(sql, (err, result) => {
-      if (err) throw err;
-      res.send(result);
+        if (err) throw err;
+        res.send(result);
     });
-  });
-
+});
 
 // Update a record
-// app.put('/users/:id', (req, res) => {
-//   const { id } = req.params;
-//   const { name, email } = req.body;
-//   const sql = `UPDATE users SET name = '${name}', email = '${email}' WHERE id = ${id}`;
-//   db.query(sql, (err, result) => {
-//     if (err) throw err;
-//     res.send('User updated successfully');
-//   });
-// });
+app.put('/categories/:id', (req, res) => {
+    const { id } = req.params;
+    const { CategoryName } = req.body;
+    const sql = `UPDATE categories SET CategoryName = '${CategoryName}' WHERE CategoryID = ${id}`;//, email = '${email}'
+    console.log(sql)
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send('User updated successfully ');
+    });
+});
+app.put('/products/:id', (req, res) => {
+    const { id } = req.params;
+    const { ProductName, CategoryID } = req.body;
+    const sql = `UPDATE products SET ProductName = '${ProductName}', CategoryID = '${CategoryID}' WHERE ProductID = ${id}`;
+    console.log(sql)
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send('User updated successfully ');
+    });
+});
 
 // Delete a record
-app.delete('/users/:id', (req, res) => {
-  const { id } = req.params;
-  const sql = `DELETE FROM users WHERE id = ${id}`;
-  db.query(sql, (err, result) => {
-    if (err) throw err;
-    res.send('User deleted successfully');
-  });
+app.delete('/categories/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = `DELETE FROM categories WHERE CategoryID = ${id}`;
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send('User deleted successfully');
+    });
+});
+app.delete('/products/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = `DELETE FROM products WHERE ProductID = ${id}`;
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send('User deleted successfully');
+    });
 });
 
 // Get users and Add users 
@@ -140,26 +163,24 @@ app.post('/addUsers', (req, res) => {
     const { name, email, password } = req.body;
     const query = `INSERT INTO users (usersName, EmailID, Password) VALUES ('${name}', '${email}', '${password}')`;
     db.query(query, (err, results) => {
-      if (err) {
-        console.error('Error creating user:', err);
-        return res.status(500).json({ error: 'Error creating user' });
-      }
-      const insertedUserId = results.insertId;
-      return res.status(201).json({ message: 'User created successfully', userId: insertedUserId });
-    })
-}) 
-
-app.get('/getUsers',(req,res)=> {
-    const query = `SELECT * FROM users`;
-    db.query(query,(err,results)=>{
-        if(err){
-            console.error('Error getting users',err);
-            return res.status(500).json({error: 'Error getting users'})
+        if (err) {
+            console.error('Error creating user:', err);
+            return res.status(500).json({ error: 'Error creating user' });
         }
-    return res.status(200).json(results);
+        const insertedUserId = results.insertId;
+        return res.status(201).json({ message: 'User created successfully', userId: insertedUserId });
     })
 });
-
+app.get('/getUsers', (req, res) => {
+    const query = `SELECT * FROM users`;
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error getting users', err);
+            return res.status(500).json({ error: 'Error getting users' })
+        }
+        return res.status(200).json(results);
+    })
+});
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const query = `SELECT * FROM users WHERE EmailID = '${email}' AND Password = '${password}'`;
@@ -167,14 +188,14 @@ app.post('/login', async (req, res) => {
         if (err) {
             console.error('Error logging in:', err);
             return res.status(500).json({ error: 'Error logging in' });
-            }
-            if (results.length > 0) {
-                return res.status(200).json( {message : 'user login ',user : results[0].usersName});
-                } else {
-                    return res.status(404).json({ error: 'User not found' });
-                    }
-                    });
-  });
+        }
+        if (results.length > 0) {
+            return res.status(200).json({ message: 'user login ', user: results[0].usersName });
+        } else {
+            return res.status(404).json({ error: 'User not found' });
+        }
+    });
+});
 
 // Start the server
 app.listen(3000, () => {

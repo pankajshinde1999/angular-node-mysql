@@ -7,6 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProductService {
+  getProductbyid(id: any) {
+    throw new Error('Method not implemented.');
+  }
 
   constructor(private http: HttpClient) { }
   baseUrl = 'http://localhost:3000'
@@ -30,4 +33,9 @@ export class ProductService {
   adduser(body: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/addUsers`, body)
   }
+  //joinproductsbyid
+  // joinproductsbyid(id: any): Observable<any> {
+  //   return this.http.post(`${this.baseUrl}/joinproducts/:id`,id)
+  //   }
+  //getProductbyid
 }
