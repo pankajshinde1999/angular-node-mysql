@@ -33,9 +33,22 @@ export class ProductService {
   adduser(body: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/addUsers`, body)
   }
-  //joinproductsbyid
-  // joinproductsbyid(id: any): Observable<any> {
-  //   return this.http.post(`${this.baseUrl}/joinproducts/:id`,id)
-  //   }
-  //getProductbyid
+  //getCategorybyid
+  getCategorybyid(id: any): Observable<any> {
+    return this.http.get(`${this.baseUrl}/joinproducts/${id}`)
+  }
+  //deleteCategory
+  deleteCategory(id: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/deletec/${id}`)
+  }
+  //addCategory
+  addCategory(body: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/categories/add`, body)
+  }
+  //addProduct
+  addProduct(body: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/products/add`, body)
+  }
+
+
 }

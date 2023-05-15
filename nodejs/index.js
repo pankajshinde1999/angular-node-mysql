@@ -41,6 +41,7 @@ app.post('/categories/add', (req, res) => {
 app.post('/products/add', (req, res) => {
     const { Name, CID } = req.body;
     const sql = `INSERT INTO Products ( ProductName, CategoryID) VALUES ( '${Name}','${CID}')`;
+    console.log(sql)
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.send(`User added with ID ${result.insertId}`);
@@ -104,7 +105,7 @@ app.get('/joinproducts/:id', (req, res) => {
     //console.log(sql)
     db.query(sql, (err, result) => {
         if (err) throw err;
-        res.send(result);
+        res.json(result);
     });
 });
 app.get('/joinproducts', (req, res) => {
@@ -114,6 +115,7 @@ app.get('/joinproducts', (req, res) => {
     //console.log(sql)
     db.query(sql, (err, result) => {
         if (err) throw err;
+        //console.log(result)
         res.send(result);
     });
 });
@@ -141,12 +143,18 @@ app.put('/products/:id', (req, res) => {
 });
 
 // Delete a record
-app.delete('/categories/:id', (req, res) => {
+app.delete('/deletec/:id', (req, res) => {
     const { id } = req.params;
-    const sql = `DELETE FROM categories WHERE CategoryID = ${id}`;
-    db.query(sql, (err, result) => {
+    // Delete products associated with the category
+    const deleteProductsQuery = `DELETE FROM products WHERE CategoryID = ${id}`;
+    db.query(deleteProductsQuery, (err, productResult) => {
         if (err) throw err;
-        res.send('User deleted successfully');
+        // Delete the category
+        const deleteCategoryQuery = `DELETE FROM categories WHERE CategoryID = ${id}`;
+        db.query(deleteCategoryQuery, (err, categoryResult) => {
+            if (err) throw err;
+            res.json(categoryResult);
+        });
     });
 });
 app.delete('/products/:id', (req, res) => {
@@ -196,6 +204,24 @@ app.post('/login', async (req, res) => {
         }
     });
 });
+
+//paging
+app.get('/api/products', (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 10;
+    const offset = (page - 1) * pageSize;
+
+    const sql = `SELECT * FROM products LIMIT ?, ?`;
+    db.query(sql, [offset, pageSize], (err, results) => {
+        if (err) {
+            console.error(err);
+            res.sendStatus(500);
+        } else {
+            res.json(results);
+        }
+    });
+});
+
 
 // Start the server
 app.listen(3000, () => {

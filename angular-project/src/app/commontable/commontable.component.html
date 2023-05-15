@@ -1,7 +1,12 @@
-<div>
-  <h1 class="alert alert-primary">join list </h1>
-</div>
-<div>
+<h2 mat-dialog-title>Products list by ID</h2>
+<div mat-dialog-content>
+  <div>
+    <form [formGroup]="ProductFrom" (ngSubmit)="onSubmit()">
+      <label>Name:</label>
+      <input type="text" formControlName="name">
+      <button type="submit">Add</button>
+    </form>
+  </div>
   <table class="table table-borderless">
     <thead>
       <tr>
@@ -21,13 +26,6 @@
     </tbody>
   </table>
 </div>
-<div class="row">
-  <div class="col-sm-12">
-    <form (ngSubmit)="getJoin()">
-      <button class="btn btn-success" type="submit">Fetch join</button>
-    </form>
-    <button class="btn btn-primary" routerLink="/home/categories">Category</button>
-    <button class="btn btn-primary" routerLink="/home/products">Products</button>
-    <button class="btn btn-primary" routerLink="/home">home</button>
-  </div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true">Close</button>
 </div>

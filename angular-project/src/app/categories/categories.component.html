@@ -7,13 +7,18 @@
       <tr>
         <th>Category ID</th>
         <th>Category Name</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let Category of categories">
         <td>{{ Category.CategoryID }}</td>
-        <!-- <td a routerLink="/home/products" class="nav-link text-dark" href="#">{{ Category.CategoryName }}</td> -->
-        <td>{{ Category.CategoryName }}</td>
+        <td class="nav-link text-dark" (click)="openDilog(Category.CategoryID)" style="cursor: pointer;">{{
+          Category.CategoryName }}</td>
+        <!-- <td>{{ Category.CategoryName }}</td> -->
+        <td>
+          <mat-icon (click)="deleteCategory(Category.CategoryID)">delete</mat-icon>
+        </td>
 
       </tr>
     </tbody>
