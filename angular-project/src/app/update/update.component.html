@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>Update</h2>
+<div mat-dialog-content>
+    <div *ngIf="bat== true">
+        <form [formGroup]="ProductFrom" (ngSubmit)="onSubmit()">
+            <label>ProductID:</label>
+            <input type="text" formControlName="pid">
+
+            <label>ProductName:</label>
+            <input type="text" formControlName="name">
+
+            <label>CategoryID:</label>
+            <input type="text" formControlName="cid">
+
+            <button type="submit" [mat-dialog-close]="true">Update</button>
+        </form>
+    </div>
+
+    <div *ngIf="bat== false">
+        <form [formGroup]="categoriesFrom" (ngSubmit)="onSubmit()">
+
+            <label>CategoriesName:</label>
+            <input type="text" formControlName="name">
+
+            <label>CategoryID:</label>
+            <input type="text" formControlName="cid">
+
+            <button type="submit" [mat-dialog-close]="true">Update</button>
+        </form>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="true">Close</button>
+    </div>

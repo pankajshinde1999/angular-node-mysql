@@ -8,6 +8,8 @@
         <th>Product ID</th>
         <th>Product Name</th>
         <th>Category ID</th>
+        <th>update</th>
+        <th>delete</th>
       </tr>
     </thead>
     <tbody>
@@ -15,6 +17,12 @@
         <td>{{ Product.ProductID }}</td>
         <td>{{ Product.ProductName }}</td>
         <td>{{ Product.CategoryID }}</td>
+        <td>
+          <mat-icon (click)="updatep(Product)">edit</mat-icon>
+        </td>
+        <td>
+          <mat-icon (click)="deleteproduct(Product.ProductID)">delete</mat-icon>
+        </td>
       </tr>
     </tbody>
   </table>

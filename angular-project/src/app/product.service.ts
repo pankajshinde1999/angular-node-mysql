@@ -18,8 +18,8 @@ export class ProductService {
     return this.http.get(`${this.baseUrl}/joinproducts`)
   }
   //getJoinid
-  getJoinid(body:any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/joinproducts`,body)
+  getJoinid(body: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/joinproducts`, body)
   }
   //categoriesdata
   getCategories(): Observable<any> {
@@ -39,11 +39,15 @@ export class ProductService {
   }
   //getCategorybyid
   getCategorybyid(id: any): Observable<any> {
-    return this.http.get(`${this.baseUrl}/joinproducts/${id}`)
+    return this.http.get(`${this.baseUrl}/joinproductsbyid/${id}`)
   }
   //deleteCategory
   deleteCategory(id: any): Observable<any> {
     return this.http.delete(`${this.baseUrl}/deletec/${id}`)
+  }
+  //deleteproduct
+  deleteproduct(id: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/products/${id}`)
   }
   //addCategory
   addCategory(body: any): Observable<any> {
@@ -53,6 +57,13 @@ export class ProductService {
   addProduct(body: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/products/add`, body)
   }
-
+  //updatep
+  updatep(body: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/updateproducts`, body)
+  }
+  //updatecat
+  updatecat(body: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/updatecategories`, body)
+  }
 
 }

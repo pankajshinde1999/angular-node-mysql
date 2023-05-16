@@ -2,12 +2,21 @@
   <h1 class="alert alert-primary">Category list </h1>
 </div>
 <div>
+  <form [formGroup]="categoriesForm" (ngSubmit)="onSubmit()">
+    <label>Name:</label>
+    <input type="text" formControlName="name">
+    <button type="submit">Add</button>
+  </form>
+</div>
+<div>
   <table class="table table-borderless">
     <thead>
       <tr>
         <th>Category ID</th>
         <th>Category Name</th>
+        <th>edit</th>
         <th>Delete</th>
+
       </tr>
     </thead>
     <tbody>
@@ -15,11 +24,12 @@
         <td>{{ Category.CategoryID }}</td>
         <td class="nav-link text-dark" (click)="openDilog(Category.CategoryID)" style="cursor: pointer;">{{
           Category.CategoryName }}</td>
-        <!-- <td>{{ Category.CategoryName }}</td> -->
+        <td>
+          <mat-icon (click)="updateg(Category)">edit</mat-icon>
+        </td>
         <td>
           <mat-icon (click)="deleteCategory(Category.CategoryID)">delete</mat-icon>
         </td>
-
       </tr>
     </tbody>
   </table>
@@ -29,9 +39,6 @@
     <form (ngSubmit)="getCategories()">
       <button class="btn btn-success" type="submit">Fetch Categories</button>
     </form>
-    <!-- <label for="id">id</label>
-    <input type="number" [(ngModel)]="catid"> -->
-    <!-- <button class="btn btn-success" type="submit" (click)="getCategorybyid()">Categoriesbyid</button> -->
     <button class="btn btn-primary" routerLink="/home">home</button>
     <button class="btn btn-primary" routerLink="/home/products">Products</button>
   </div>

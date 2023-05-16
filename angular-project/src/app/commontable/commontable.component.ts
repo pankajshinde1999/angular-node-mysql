@@ -32,15 +32,16 @@ export class CommontableComponent {
     this.pservice.addProduct(body).subscribe(
       (data: any) => {
         this.router.navigate(['/home/products'])
-        }
-        )
-    // this.pservice.adduser(body).subscribe(
-    //   (res: any) => {
-    //     console.log(res)
-    //     // localStorage.setItem('user', res.user)
-    //     this.router.navigate(['/login'])
-    //     //localStorage.setItem('user', JSON.stringify(res.data.user))
-    //   })
+      }
+    )
   }
+  // this.pservice.adduser(body).subscribe(
+  //   (res: any) => {
+  //     console.log(res)
+  //     // localStorage.setItem('user', res.user)
+  //     this.router.navigate(['/login'])
+  //     //localStorage.setItem('user', JSON.stringify(res.data.user))
+  //   })
+
 
 }

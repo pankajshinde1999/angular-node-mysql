@@ -44,6 +44,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { UpdateComponent } from './update/update.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     CategoriesComponent,
     ProductsComponent,
     JoinComponent,
-    CommontableComponent
+    CommontableComponent,
+    UpdateComponent
   ],
   imports: [
     BrowserModule,

@@ -29,26 +29,22 @@ db.connect((err) => {
 });
 
 //Create a new record
-
 app.post('/categories/add', (req, res) => {
-    const { ID, Name } = req.body;
-    const sql = `INSERT INTO categories (CategoryID, CategoryName) VALUES ('${ID}', '${Name}')`;
+    const { name } = req.body;
+    const sql = `INSERT INTO categories ( CategoryName) VALUES ('${name}')`;
     db.query(sql, (err, result) => {
         if (err) throw err;
-        res.send(`User added with ID ${result.insertId}`);
+        res.json(result);
     });
 });
 app.post('/products/add', (req, res) => {
     const { name, cid } = req.body;
-    const sql = `INSERT INTO testdb.products ( ProductName, CategoryID) VALUES ( '${name}',${cid})`;
+    const sql = `INSERT INTO products ( ProductName, CategoryID) VALUES ( '${name}',${cid})`;
     console.log(sql)
     db.query(sql, (err, result) => {
         if (err) throw err;
-        res.send(`User added with ID ${result.insertId}`);
+        res.json(result);
     });
-
-
-
 });
 
 // Retrieve all records
@@ -96,18 +92,18 @@ app.post('/getproducts/:id', (req, res) => {
     });
 });
 
-// //join and join by id
-// app.get('/joinproducts/:id', (req, res) => {
-//     const { id } = req.params;
-//     const sql = `SELECT c.CategoryID, c.CategoryName, p.ProductID, p.ProductName 
-//                 FROM Products p 
-//                 INNER JOIN categories c ON p.CategoryID = c.CategoryID AND c.CategoryID =${id} ;`;
-//     //console.log(sql)
-//     db.query(sql, (err, result) => {
-//         if (err) throw err;
-//         res.json(result);
-//     });
-// });
+//join and join by id
+app.get('/joinproductsbyid/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = `SELECT c.CategoryID, c.CategoryName, p.ProductID, p.ProductName 
+                FROM Products p 
+                INNER JOIN categories c ON p.CategoryID = c.CategoryID AND c.CategoryID =${id} ;`;
+    //console.log(sql)
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.json(result);
+    });
+});
 app.get('/joinproducts', (req, res) => {
     const sql = `SELECT c.CategoryID, c.CategoryName, p.ProductID, p.ProductName 
                 FROM Products p 
@@ -127,30 +123,30 @@ app.post('/joinproducts', (req, res) => {
                 INNER JOIN categories c ON p.CategoryID = c.CategoryID 
                 LIMIT ${pageSize} OFFSET ${startIndex}`;
     db.query(sql, (err, result) => {
-      if (err) throw err;
-      res.send(result);
-    });
-  });
-
-// Update a record
-app.put('/categories/:id', (req, res) => {
-    const { id } = req.params;
-    const { CategoryName } = req.body;
-    const sql = `UPDATE categories SET CategoryName = '${CategoryName}' WHERE CategoryID = ${id}`;//, email = '${email}'
-    console.log(sql)
-    db.query(sql, (err, result) => {
         if (err) throw err;
-        res.send('User updated successfully ');
+        res.send(result);
     });
 });
-app.put('/products/:id', (req, res) => {
-    const { id } = req.params;
-    const { ProductName, CategoryID } = req.body;
-    const sql = `UPDATE products SET ProductName = '${ProductName}', CategoryID = '${CategoryID}' WHERE ProductID = ${id}`;
+
+// Update a record
+app.put('/updatecategories', (req, res) => {
+    const { cid, name } = req.body;
+    const sql = `UPDATE categories SET CategoryName = '${name}' WHERE CategoryID = ${cid}`;//, email = '${email}'
     console.log(sql)
     db.query(sql, (err, result) => {
         if (err) throw err;
-        res.send('User updated successfully ');
+        res.json(result);
+    });
+});
+app.put('/updateproducts', (req, res) => {
+    const { pid, cid, name } = req.body;
+    // const { ProductName, CategoryID } = req.body;
+    const sql = `UPDATE products SET ProductName = '${name}'WHERE CategoryID = '${cid}' AND ProductID = ${pid}`;
+    console.log(sql)
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.json(result);
+
     });
 });
 
@@ -174,7 +170,7 @@ app.delete('/products/:id', (req, res) => {
     const sql = `DELETE FROM products WHERE ProductID = ${id}`;
     db.query(sql, (err, result) => {
         if (err) throw err;
-        res.send('User deleted successfully');
+        res.json(result);
     });
 });
 
