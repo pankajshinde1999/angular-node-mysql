@@ -25,16 +25,17 @@ export class CategoriesComponent {
     this.categoryService.getCategorybyid(catid).subscribe(
       data => {
         console.log(data)
-        this.open(data)
+        this.open(data,catid)
       }
     )
 
   }
-  open(data1: any) {
+  open(data1: any, catid : any) {
     this.dialog.open(CommontableComponent, {
       height: '80%', width: '80%',
       data: {
-        value: data1
+        value: data1,
+        cid : catid
 
       }
     });

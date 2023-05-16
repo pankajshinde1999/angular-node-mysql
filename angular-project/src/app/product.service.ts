@@ -17,6 +17,10 @@ export class ProductService {
   getJoin(): Observable<any> {
     return this.http.get(`${this.baseUrl}/joinproducts`)
   }
+  //getJoinid
+  getJoinid(body:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/joinproducts`,body)
+  }
   //categoriesdata
   getCategories(): Observable<any> {
     return this.http.get(`${this.baseUrl}/categories`)

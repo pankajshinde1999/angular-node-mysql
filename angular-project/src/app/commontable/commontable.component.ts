@@ -17,9 +17,9 @@ export class CommontableComponent {
     private router: Router) {
     this.products = data['value'];
     console.log('products', this.products)
+    this.iniliza()
   }
   iniliza() {
-
     this.ProductFrom = this.formBuilder.group({
       name: ['', Validators.required]
     });
@@ -27,8 +27,13 @@ export class CommontableComponent {
 
   onSubmit() {
     let body = this.ProductFrom.getRawValue()
-    body.cid = this.products[0].CategoryID
-    console.log(body)
+    body.cid = this.data['cid']
+    console.log(body);
+    this.pservice.addProduct(body).subscribe(
+      (data: any) => {
+        this.router.navigate(['/home/products'])
+        }
+        )
     // this.pservice.adduser(body).subscribe(
     //   (res: any) => {
     //     console.log(res)

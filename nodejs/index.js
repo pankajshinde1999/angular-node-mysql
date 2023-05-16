@@ -39,8 +39,8 @@ app.post('/categories/add', (req, res) => {
     });
 });
 app.post('/products/add', (req, res) => {
-    const { Name, CID } = req.body;
-    const sql = `INSERT INTO Products ( ProductName, CategoryID) VALUES ( '${Name}','${CID}')`;
+    const { name, cid } = req.body;
+    const sql = `INSERT INTO testdb.products ( ProductName, CategoryID) VALUES ( '${name}',${cid})`;
     console.log(sql)
     db.query(sql, (err, result) => {
         if (err) throw err;
@@ -96,18 +96,18 @@ app.post('/getproducts/:id', (req, res) => {
     });
 });
 
-//join and join by id
-app.get('/joinproducts/:id', (req, res) => {
-    const { id } = req.params;
-    const sql = `SELECT c.CategoryID, c.CategoryName, p.ProductID, p.ProductName 
-                FROM Products p 
-                INNER JOIN categories c ON p.CategoryID = c.CategoryID AND c.CategoryID =${id} ;`;
-    //console.log(sql)
-    db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.json(result);
-    });
-});
+// //join and join by id
+// app.get('/joinproducts/:id', (req, res) => {
+//     const { id } = req.params;
+//     const sql = `SELECT c.CategoryID, c.CategoryName, p.ProductID, p.ProductName 
+//                 FROM Products p 
+//                 INNER JOIN categories c ON p.CategoryID = c.CategoryID AND c.CategoryID =${id} ;`;
+//     //console.log(sql)
+//     db.query(sql, (err, result) => {
+//         if (err) throw err;
+//         res.json(result);
+//     });
+// });
 app.get('/joinproducts', (req, res) => {
     const sql = `SELECT c.CategoryID, c.CategoryName, p.ProductID, p.ProductName 
                 FROM Products p 
@@ -119,6 +119,18 @@ app.get('/joinproducts', (req, res) => {
         res.send(result);
     });
 });
+app.post('/joinproducts', (req, res) => {
+    const { page, pageSize } = req.body;
+    const startIndex = (page - 1) * pageSize;
+    const sql = `SELECT c.CategoryID, c.CategoryName, p.ProductID, p.ProductName 
+                FROM Products p 
+                INNER JOIN categories c ON p.CategoryID = c.CategoryID 
+                LIMIT ${pageSize} OFFSET ${startIndex}`;
+    db.query(sql, (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    });
+  });
 
 // Update a record
 app.put('/categories/:id', (req, res) => {

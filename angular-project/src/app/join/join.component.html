@@ -1,29 +1,40 @@
 <div>
-  <h1 class="alert alert-primary">join list </h1>
+  <h1 class="alert alert-primary">join product list </h1>
 </div>
-<div>
-  <table class="table table-borderless">
-    <thead>
-      <tr>
-        <th>Product ID</th>
-        <th>Product Name</th>
-        <th>Category ID</th>
-        <th>Category Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let product of products">
-        <td>{{ product.ProductID }}</td>
-        <td>{{ product.ProductName }}</td>
-        <td>{{ product.CategoryID }}</td>
-        <td>{{ product.CategoryName }}</td>
-      </tr>
-    </tbody>
-  </table>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Product ID</th>
+      <th>Product Name</th>
+      <th>Category ID</th>
+      <th>Category Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.ProductID }}</td>
+      <td>{{ product.ProductName }}</td>
+      <td>{{ product.CategoryID }}</td>
+      <td>{{ product.CategoryName }}</td>
+    </tr>
+  </tbody>
+</table>
+<div class="pagination">
+  <button class="btn btn-primary" (click)="prevPage()" [disabled]="page === 1">Previous</button>
+  <span class="page-info">Page {{ page }} of {{ products.length }}</span>
+  <div class="page-size" style="margin-left: 20px;">
+    <!-- <label for="pageSize">Page Size:</label> -->
+    <select id="pageSize" [(ngModel)]="pageSize" (change)="onPageSizeChange()">
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="15">15</option>
+    </select>
+  </div>
+  <button class="btn btn-primary" (click)="nextPage()" [disabled]="products.length==1">Next</button>
 </div>
 <div class="row">
   <div class="col-sm-12">
-    <form (ngSubmit)="getJoin()">
+    <form (ngSubmit)="getJoinid()">
       <button class="btn btn-success" type="submit">Fetch join</button>
     </form>
     <button class="btn btn-primary" routerLink="/home/categories">Category</button>
